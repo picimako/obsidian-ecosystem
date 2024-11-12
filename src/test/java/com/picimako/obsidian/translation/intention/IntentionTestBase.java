@@ -3,13 +3,13 @@ package com.picimako.obsidian.translation.intention;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 
 /**
  * Base class for testing intention actions.
  */
-abstract class IntentionTestBase extends ObsidianTestBase {
+abstract class IntentionTestBase extends BasePlatformTestCase {
 
     /**
      * Implement this to provide an instance of the test subject intention action.

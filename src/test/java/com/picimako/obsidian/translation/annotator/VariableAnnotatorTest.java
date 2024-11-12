@@ -1,12 +1,12 @@
 package com.picimako.obsidian.translation.annotator;
 
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 
 /**
  * Integration test for {@link VariableAnnotator}.
  */
-public final class VariableAnnotatorTest extends ObsidianTestBase {
+public final class VariableAnnotatorTest extends BasePlatformTestCase {
 
     public void testNoAnnotationInNonObsidianTranslationsProject() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(false);

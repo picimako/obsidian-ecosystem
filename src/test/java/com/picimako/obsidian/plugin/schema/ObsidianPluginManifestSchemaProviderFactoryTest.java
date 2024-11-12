@@ -3,7 +3,7 @@ package com.picimako.obsidian.plugin.schema;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.psi.PsiFile;
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.picimako.obsidian.plugin.schema.ObsidianPluginManifestSchemaProviderFactory.ObsidianPluginManifestSchemaProvider;
 import com.picimako.obsidian.settings.ObsidianProjectState;
 import com.picimako.obsidian.settings.ObsidianProjectType;
@@ -11,7 +11,7 @@ import com.picimako.obsidian.settings.ObsidianProjectType;
 /**
  * Integration test for {@link ObsidianPluginManifestSchemaProviderFactory}.
  */
-public final class ObsidianPluginManifestSchemaProviderFactoryTest extends ObsidianTestBase {
+public final class ObsidianPluginManifestSchemaProviderFactoryTest extends BasePlatformTestCase {
 
     //ObsidianPluginManifestSchemaProvider
 

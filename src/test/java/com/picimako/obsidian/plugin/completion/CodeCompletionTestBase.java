@@ -3,7 +3,7 @@ package com.picimako.obsidian.plugin.completion;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.codeInsight.completion.CompletionType;
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Base class for testing code completions.
  */
-abstract class CodeCompletionTestBase extends ObsidianTestBase {
+abstract class CodeCompletionTestBase extends BasePlatformTestCase {
 
     /**
      * Tests basic code completion in the provided file {@code text} at the marked caret position,

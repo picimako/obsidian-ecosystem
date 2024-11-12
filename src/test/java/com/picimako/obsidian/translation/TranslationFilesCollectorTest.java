@@ -4,12 +4,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.psi.PsiFileSystemItem;
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 /**
  * Integration test for {@link TranslationFilesCollector}.
  */
-public final class TranslationFilesCollectorTest extends ObsidianTestBase {
+public final class TranslationFilesCollectorTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {

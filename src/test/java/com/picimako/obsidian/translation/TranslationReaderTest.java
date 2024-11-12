@@ -2,14 +2,14 @@ package com.picimako.obsidian.translation;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.picimako.obsidian.ObsidianTestBase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 import java.util.Map;
 
 /**
  * Integration test for {@link TranslationReader}.
  */
-public final class TranslationReaderTest extends ObsidianTestBase {
+public final class TranslationReaderTest extends BasePlatformTestCase {
 
     @Override
     protected String getTestDataPath() {
