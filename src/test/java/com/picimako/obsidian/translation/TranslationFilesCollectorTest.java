@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.psi.PsiFileSystemItem;
+import com.intellij.testFramework.StartupActivityTestUtil;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 
 /**
@@ -33,6 +34,7 @@ public final class TranslationFilesCollectorTest extends BasePlatformTestCase {
     }
 
     public void testCollectsTranslationFilesExcludingTheFileAtInvocation() {
+        StartupActivityTestUtil.waitForProjectActivitiesToComplete(getProject());
         myFixture.copyFileToProject(".eslintrc.json");
         myFixture.copyFileToProject("package.json");
         myFixture.copyFileToProject("en.json");
