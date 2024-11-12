@@ -1,44 +1,16 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
-<idea-plugin require-restart="true">
+<idea-plugin>
     <id>com.picimako.obsidian.ecosystem</id>
     <name>Obsidian Ecosystem</name>
     <vendor url="https://github.com/picimako/obsidian-ecosystem">Tamás Balog</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
-    <depends optional="true" config-file="js-features.xml">JavaScript</depends>
-
     <resource-bundle>messages.ObsidianBundle</resource-bundle>
 
+    <depends>com.intellij.modules.platform</depends>
+    <depends optional="true" config-file="json-features.xml">com.intellij.modules.json</depends>
+    <depends optional="true" config-file="js-features.xml">JavaScript</depends>
+
     <extensions defaultExtensionNs="com.intellij">
-        <localInspection implementationClass="com.picimako.obsidian.translation.inspection.VariableUsageInspection"
-                         id="obsidian.variable.usage" language="JSON"
-                         displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
-
-        <localInspection
-                implementationClass="com.picimako.obsidian.plugin.inspection.PluginManifestInspection"
-                id="obsidian.manifest.json" language="JSON"
-                displayName="Plugin/Theme manifest.json issues" groupPath="Obsidian" groupName="Plugin/Themes" enabledByDefault="true" level="ERROR"/>
-
-        <intentionAction>
-            <language>JSON</language>
-            <category>Obsidian/Translations</category>
-            <className>com.picimako.obsidian.translation.intention.ShowTranslationInOtherLanguageIntention</className>
-        </intentionAction>
-
-        <intentionAction>
-            <language>JSON</language>
-            <category>Obsidian/Translations</category>
-            <className>com.picimako.obsidian.translation.intention.GenerateTranslationInOthersIntention</className>
-        </intentionAction>
-
-        <intentionAction>
-            <language>JSON</language>
-            <category>Obsidian/Translations</category>
-            <className>com.picimako.obsidian.translation.intention.DeletePropertyFromAllTranslationsIntention</className>
-        </intentionAction>
-
-        <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
-
         <postStartupActivity implementation="com.picimako.obsidian.ProjectStartupActivity"/>
 
         <!-- Plugin Settings -->
@@ -52,5 +24,4 @@
     <extensions defaultExtensionNs="JavaScript.JsonSchema">
         <ProviderFactory implementation="com.picimako.obsidian.plugin.schema.ObsidianPluginManifestSchemaProviderFactory"/>
     </extensions>
-
 </idea-plugin>

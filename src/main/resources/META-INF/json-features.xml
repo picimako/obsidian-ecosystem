@@ -1,0 +1,32 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection implementationClass="com.picimako.obsidian.translation.inspection.VariableUsageInspection"
+                         id="obsidian.variable.usage" language="JSON"
+                         displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
+
+        <localInspection
+                implementationClass="com.picimako.obsidian.plugin.inspection.PluginManifestInspection"
+                id="obsidian.manifest.json" language="JSON"
+                displayName="Plugin/Theme manifest.json issues" groupPath="Obsidian" groupName="Plugin/Themes" enabledByDefault="true" level="ERROR"/>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.ShowTranslationInOtherLanguageIntention</className>
+        </intentionAction>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.GenerateTranslationInOthersIntention</className>
+        </intentionAction>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.DeletePropertyFromAllTranslationsIntention</className>
+        </intentionAction>
+
+        <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
+    </extensions>
+</idea-plugin>

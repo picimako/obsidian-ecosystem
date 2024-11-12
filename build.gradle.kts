@@ -31,6 +31,9 @@ repositories {
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     testImplementation(libs.junit)
+    //See https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-faq.html#missing-opentest4j-dependency-in-test-framework
+    testImplementation("org.opentest4j:opentest4j:1.3.0")
+    testImplementation("org.assertj:assertj-core:3.26.3")
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
@@ -46,6 +49,8 @@ dependencies {
         pluginVerifier()
         //For BasePlatformTestCase
         testFramework(TestFrameworkType.Platform)
+        //Required for 'LightJavaCodeInsightFixtureTestCase'
+        testFramework(TestFrameworkType.Plugin.Java)
     }
 }
 
