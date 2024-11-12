@@ -7,7 +7,7 @@ translations (mainly this area) and plugin/theme development.
 The plugin is not released on the JetBrains Marketplace or on any other outlet. It's main purpose is to demonstrate
 that such small aspects of an ecosystem like translations can have meaningful IDE integrations, even if it is for a
 small number of contributors. However, the plugin is functional, so feel free to use it for actual Obsidian translation
-activities.
+activities. You can download the plugin archive from the [download](download/obsidian-ecosystem-0.1.0.zip) directory.
 <!-- Plugin description end -->
 
 ----
