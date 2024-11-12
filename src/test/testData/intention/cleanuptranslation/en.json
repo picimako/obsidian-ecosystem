@@ -1,0 +1,17 @@
+{
+  "setting": {
+    "options": "Options",
+    "editor": {
+      "name": "<caret>Editor"
+    },
+    "file": {
+      "name": "Files & Links",
+      "option-confirm-file-deletion": "Confirm file deletion"
+    },
+    "appearance": {
+      "name": "Appearance",
+      "option-base-theme": "Base theme",
+      "option-base-theme-description": "Choose Obsidian's default color scheme."
+    }
+  }
+}

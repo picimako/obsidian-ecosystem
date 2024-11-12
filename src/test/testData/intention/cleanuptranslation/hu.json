@@ -1,0 +1,17 @@
+{
+  "setting": {
+    "options": "Beallitasok",
+    "editor": {
+      "name": "Szerkeszto"
+    },
+    "file": {
+      "name": "Fajlok es hivatkozasok",
+      "option-confirm-file-deletion": "Fajl torlesenek megerositese"
+    },
+    "appearance": {
+      "name": "Megjelenes",
+      "option-base-theme": "Alap tema",
+      "option-base-theme-description": "Valassza ki az Obsidian alapertelmezett szinsemajat."
+    }
+  }
+}

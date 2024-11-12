@@ -1,0 +1,44 @@
+# https://docs.obsidian.md/Reference/Manifest
+type: object
+properties:
+  author:
+    type: string
+    description: The author's name.
+  minAppVersion:
+    type: string
+    description: The minimum required Obsidian version.
+  name:
+    type: string
+    description: The display name.
+  version:
+    type: string
+    description: The version, using Semantic Versioning
+  authorUrl:
+    type: string
+    description: A URL to the author's website.
+  fundingUrl:
+    description: A URL or multiple URLs to where the users can support your project financially.
+    oneOf:
+      - type: string
+      - type: object
+        patternProperties:
+          ^.+$:
+            type: string
+  description:
+    type: string
+    description: A description of your plugin.
+  id:
+    type: string
+    description: The ID of your plugin.
+  isDesktopOnly:
+    type: boolean
+    description: Whether your plugin uses NodeJS or Electron APIs.
+required:
+  - author
+  - minAppVersion
+  - name
+  - version
+  - description
+  - id
+  - isDesktopOnly
+additionalProperties: false

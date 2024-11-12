@@ -1,0 +1,14 @@
+{
+  "properties": {
+    "types": {
+      "option-multitext": "List",
+      "option-checkbox": "Checkbox"
+    },
+    "value-suggestion": {
+      "instruction-link-note": "to link note",
+      "instruction-dismiss": "to dismiss"
+    },
+    "option-property-type": "Property type",
+    "msg-empty-property-name": "Property name cannot be empty.",
+  }
+}

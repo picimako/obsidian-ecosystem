@@ -1,0 +1,10 @@
+<idea-plugin>
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor language="JavaScript" implementationClass="com.picimako.obsidian.plugin.completion.IconNameCompletionProvider"/>
+
+        <localInspection
+                implementationClass="com.picimako.obsidian.plugin.inspection.CommandIdInspection"
+                id="obsidian.manifest.json" language="JavaScript"
+                displayName="Plugin id specified in command id" groupPath="Obsidian" groupName="Plugin/Themes" enabledByDefault="true" level="ERROR"/>
+    </extensions>
+</idea-plugin>
