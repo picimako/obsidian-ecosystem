@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.2.0]
+### Changed
+- Updated supported IDE range to 2024.3 - 2025.1.
+
 ## [0.1.0]
 ### Added
 - **Translations**: Added intention action to be able to navigate to other translations of selected properties.
