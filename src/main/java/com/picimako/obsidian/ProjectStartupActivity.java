@@ -28,7 +28,7 @@ final class ProjectStartupActivity implements ProjectActivity {
 
     @Override
     public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
-        if ("obsidian-translations".equals(project.getName())) {
+        if (project.getName().contains("obsidian-translations")) {
             OriginalLocalizationValuesCache.getInstance(project).setProjectObsidianTranslations(true);
             TranslationReader.readOriginal(project);
             registerOriginalValuesListener(project);

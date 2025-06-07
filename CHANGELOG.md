@@ -7,6 +7,8 @@
 ## [0.2.0]
 ### Changed
 - Updated supported IDE range to 2024.3 - 2025.1.
+- The obsidian-translations project is now recognized when the project name contains "obsidian-translations",
+and not when it is equal to it.
 
 ## [0.1.0]
 ### Added
