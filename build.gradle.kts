@@ -100,7 +100,7 @@ intellijPlatform {
 intellijPlatformTesting {
     val runTestsInIJUltimate by intellijPlatformTesting.testIde.registering {
         type = IntelliJPlatformType.IntellijIdeaUltimate
-        version = "2024.2"
+        version = "2025.1"
         task {
             useJUnit {
                 isScanForTestClasses = false

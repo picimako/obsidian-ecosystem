@@ -27,7 +27,6 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.ProcessingContext;
 import com.picimako.obsidian.settings.ObsidianProjectState;
-import com.picimako.obsidian.settings.ObsidianProjectType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -43,7 +42,10 @@ import java.util.function.Predicate;
 final class IconNameCompletionProvider extends CompletionContributor {
     private static final Set<String> SET_ICON_CLASS_NAMES = Set.of("ButtonComponent", "ExtraButtonComponent", "Menu", "MenuItem");
     private static final PsiFilePattern.@NotNull Capture<PsiFile> TS_OR_TSX_FILE = psiFile().with(patternCondition("TS or TSX file",
-        psiFile -> psiFile.getFileType() == TypeScriptFileType.INSTANCE || psiFile.getFileType() == TypeScriptJSXFileType.INSTANCE));
+        psiFile -> {
+            var fileType = psiFile.getFileType();
+            return fileType == TypeScriptFileType.INSTANCE || fileType == TypeScriptJSXFileType.INSTANCE;
+        }));
 
     /**
      * Supported calls:
