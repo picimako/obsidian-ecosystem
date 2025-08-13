@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.3.0]
+### Added
+- Uploaded separate IntelliJ Community and Ultimate plugin archives, so the plugin can be installed and used
+in Community without the JavaScript specific features.
+
+### Changed
+- Updated supported IDE range to 2025.1+.
+
 ## [0.2.0]
 ### Changed
 - Updated supported IDE range to 2024.3 - 2025.1.
