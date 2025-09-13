@@ -2,12 +2,14 @@ package com.picimako.obsidian.translation;
 
 import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Project service for storing the original, English localization values each mapped to its property path
+ * Project service for storing the original, English localization values, each mapped to its property path
  * inside the translation files.
  * <p>
  * This is put into place, so that the English JSON file's PSI don't have to be re-read and traversed every time
@@ -19,15 +21,14 @@ public final class OriginalLocalizationValuesCache {
     /**
      * JSON property path -> original English localization value.
      */
+    @Getter
     private final Map<String, String> originalValues = new HashMap<>();
+    @Getter
+    @Setter
     private boolean isProjectObsidianTranslations;
 
     @SuppressWarnings("unused")
     public OriginalLocalizationValuesCache(Project project) {
-    }
-
-    public Map<String, String> getOriginalValues() {
-        return originalValues;
     }
 
     /**
@@ -35,14 +36,6 @@ public final class OriginalLocalizationValuesCache {
      */
     public void addLocalizationValue(String path, String value) {
         originalValues.put(path, value);
-    }
-
-    public boolean isProjectObsidianTranslations() {
-        return isProjectObsidianTranslations;
-    }
-
-    public void setProjectObsidianTranslations(boolean projectObsidianTranslations) {
-        isProjectObsidianTranslations = projectObsidianTranslations;
     }
 
     public static OriginalLocalizationValuesCache getInstance(Project project) {

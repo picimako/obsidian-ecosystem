@@ -1,8 +1,5 @@
 package com.picimako.obsidian.translation;
 
-import static com.intellij.openapi.application.ReadAction.compute;
-import static com.intellij.psi.util.PsiTreeUtil.collectParents;
-
 import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonObject;
 import com.intellij.json.psi.JsonProperty;
@@ -11,7 +8,10 @@ import com.intellij.psi.PsiFile;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.intellij.openapi.application.ReadAction.compute;
+import static com.intellij.psi.util.PsiTreeUtil.collectParents;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Various utilities for JSON translation files.
@@ -30,7 +30,7 @@ public final class TranslationFileUtil {
         var propertyPath = compute(() -> collectParents(startElement, JsonProperty.class, true, e -> e.isEquivalentTo(endElement)))
             .stream()
             .map(JsonProperty::getName)
-            .collect(Collectors.toList());
+            .collect(toList());
         Collections.reverse(propertyPath);
 
         return propertyPath;
@@ -43,7 +43,7 @@ public final class TranslationFileUtil {
      * @param topLevelObject the top level object in a translation file
      */
     public static JsonProperty findPropertyByPath(List<String> path, JsonObject topLevelObject) {
-        var property = compute(() -> topLevelObject.findProperty(path.get(0)));
+        var property = compute(() -> topLevelObject.findProperty(path.getFirst()));
 
         for (int i = 1; i < path.size(); i++) {
             final int index = i;

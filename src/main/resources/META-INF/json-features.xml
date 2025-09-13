@@ -5,6 +5,11 @@
                          displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
 
         <localInspection
+                implementationClass="com.picimako.obsidian.translation.inspection.TranslationIsOriginalInspection"
+                id="obsidian.translation.is.original.json" language="JSON"
+                displayName="Translation is same as original" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR"/>
+
+        <localInspection
                 implementationClass="com.picimako.obsidian.plugin.inspection.PluginManifestInspection"
                 id="obsidian.manifest.json" language="JSON"
                 displayName="Plugin/Theme manifest.json issues" groupPath="Obsidian" groupName="Plugin/Themes" enabledByDefault="true" level="ERROR"/>

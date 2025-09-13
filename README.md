@@ -19,6 +19,7 @@ activities. You can download the plugin archive from the [download](download/obs
     * [Delete property from all translations](#delete-property-from-all-translations)
     * [Variable annotations](#variable-annotations)
     * [Variable usage inspections](#variable-usage-inspections)
+    * [Untranslated entries](#untranslated-entries)
 * [Plugins and Themes](#plugins-and-themes)
     * [JSON schema for manifest.json](#json-schema-for-manifestjson)
     * [manifest.json issues](#manifestjson-issues)
@@ -145,6 +146,20 @@ This inspection reports the following issues with `{{...}}` variables:
 or by other means.
 
 ![variable reports](assets/variable_reports.png)
+
+### Untranslated entries
+
+This inspection reports localization properties that are untranslated, i.e. have the same value as their original,
+English counterparts. This can aid translators to identify entries that are not yet translated.
+
+![untranslated_items](assets/untranslated_items.png)
+
+In the inspections settings there is a customizable list of JSON paths to ignore entries that doesn't need translation,
+like abbreviations, or are not allowed to be translated, like brand names.
+
+The feature comes with a default set of such ignored entries but one can remove or add any.
+
+![untranslated_items_ignored](assets/untranslated_items_ignored.png)
 
 ----
 

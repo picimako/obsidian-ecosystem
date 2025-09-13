@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlin) // Kotlin support
     alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
+    id("io.freefair.lombok") version "8.14.2"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
