@@ -173,6 +173,9 @@ This feature is disabled by default, and can be enabled under Settings > Editor 
 
 ![original_values_inline](assets/original_values_inline.png)
 
+There are entries that start and/or end with whitespaces. The inlay hint texts of those are enclosed by '' characters, so that the enclosing
+whitespace characters become more prominent.
+
 ----
 
 ## Plugins and Themes

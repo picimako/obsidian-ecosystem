@@ -6,6 +6,9 @@
     "plugin-options": "Plugin options",
     "folder-path-example-placeholder": "Example: folder 1/folder 2",
     "file-path-example-placeholder": "Example: folder/note",
-    "msg-restart-required": "Changing this option requires a restart to take effect."
+    "msg-restart-required": "Changing this option requires a restart to take effect.",
+    "appearance": {
+      "label-single-font-currently-in-effect": " Currently applied font: "
+    }
   }
 }

@@ -9,6 +9,8 @@ import kotlin.Unit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
+
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.getOriginalValueAt;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
@@ -21,6 +23,8 @@ import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGIN
 class OriginalValueInlayHintsProvider implements InlayHintsProvider {
     private static final SharedBypassCollector NO_OP_COLLECTOR = (host, sink) -> {
     };
+    private static final String WHITESPACE = " ";
+    private static final String DELIMITER = "''";
 
     @Override
     public @Nullable InlayHintsCollector createCollector(@NotNull PsiFile psiFile, @NotNull Editor editor) {
@@ -33,18 +37,19 @@ class OriginalValueInlayHintsProvider implements InlayHintsProvider {
             if (!(host instanceof JsonProperty property)) return;
 
             var propertyPath = getPropertyPath(property, psiFile);
-            String valueAtPath = getOriginalValueAt(propertyPath, psiFile.getProject());
-            if (valueAtPath == null) return;
-
-            sink.addPresentation(
-                new AboveLineIndentedPosition(property.getTextOffset(), 0, 0),
-                null,
-                null,
-                HintFormat.Companion.getDefault().withColorKind(HintColorKind.TextWithoutBackground),
-                treeBuilder -> {
-                    treeBuilder.text(valueAtPath, null);
-                    return Unit.INSTANCE;
-                });
+            Optional.ofNullable(getOriginalValueAt(propertyPath, psiFile.getProject()))
+                //If a string starts or ends with a whitespace, wrap it in quotes so that those whitespaces become visible
+                // in the inlay hints
+                .map(value -> value.startsWith(WHITESPACE) || value.endsWith(WHITESPACE) ? DELIMITER + value + DELIMITER : value)
+                .ifPresent(valueAtPath -> sink.addPresentation(
+                    new AboveLineIndentedPosition(property.getTextOffset(), 0, 0),
+                    null,
+                    null,
+                    HintFormat.Companion.getDefault().withColorKind(HintColorKind.TextWithoutBackground),
+                    treeBuilder -> {
+                        treeBuilder.text(valueAtPath, null);
+                        return Unit.INSTANCE;
+                    }));
         };
     }
 }
