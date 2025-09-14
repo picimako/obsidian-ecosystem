@@ -10,13 +10,13 @@ import com.intellij.json.psi.JsonProperty;
 import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.util.containers.OrderedSet;
-import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
 
 import static com.picimako.obsidian.messages.ObsidianBundle.message;
+import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.getOriginalValueAt;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
@@ -61,7 +61,7 @@ class TranslationIsOriginalInspection extends LocalInspectionTool {
                     var propertyPath = getPropertyPath(property, session.getFile());
                     if (ignoredProperties.contains(propertyPath)) return;
 
-                    String originalValueAtPath = OriginalLocalizationValuesCache.getInstance(holder.getProject()).getOriginalValues().get(propertyPath);
+                    String originalValueAtPath = getOriginalValueAt(propertyPath, holder.getProject());
 
                     if (Objects.equals(originalValueAtPath, literal.getValue()))
                         holder.registerProblem(literal, message("translations.is.same.as.original", ProblemHighlightType.WARNING));

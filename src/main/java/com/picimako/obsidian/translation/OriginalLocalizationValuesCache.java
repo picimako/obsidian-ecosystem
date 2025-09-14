@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,5 +45,10 @@ public final class OriginalLocalizationValuesCache {
 
     public static boolean isProjectObsidianTranslations(Project project) {
         return OriginalLocalizationValuesCache.getInstance(project).isProjectObsidianTranslations();
+    }
+
+    @Nullable
+    public static String getOriginalValueAt(String propertyPath, Project project) {
+        return OriginalLocalizationValuesCache.getInstance(project).getOriginalValues().get(propertyPath);
     }
 }

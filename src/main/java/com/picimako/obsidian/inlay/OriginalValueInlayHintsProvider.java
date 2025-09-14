@@ -5,11 +5,11 @@ import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonProperty;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiFile;
-import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import kotlin.Unit;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.getOriginalValueAt;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
@@ -33,7 +33,7 @@ class OriginalValueInlayHintsProvider implements InlayHintsProvider {
             if (!(host instanceof JsonProperty property)) return;
 
             var propertyPath = getPropertyPath(property, psiFile);
-            String valueAtPath = OriginalLocalizationValuesCache.getInstance(psiFile.getProject()).getOriginalValues().get(propertyPath);
+            String valueAtPath = getOriginalValueAt(propertyPath, psiFile.getProject());
             if (valueAtPath == null) return;
 
             sink.addPresentation(

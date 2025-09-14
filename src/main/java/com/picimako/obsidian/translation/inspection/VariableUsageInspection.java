@@ -10,11 +10,11 @@ import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.util.containers.SmartHashSet;
 import com.picimako.obsidian.messages.ObsidianBundle;
-import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
+import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.getOriginalValueAt;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
@@ -39,7 +39,7 @@ final class VariableUsageInspection extends LocalInspectionTool {
             public void visitProperty(@NotNull JsonProperty property) {
                 if (property.getValue() instanceof JsonStringLiteral literal && literal.getValue().length() >= STRING_WITH_VARIABLE_MINIMUM_LENGTH) {
                     var propertyPath = getPropertyPath(property, session.getFile());
-                    String valueAtPath = OriginalLocalizationValuesCache.getInstance(holder.getProject()).getOriginalValues().get(propertyPath);
+                    String valueAtPath = getOriginalValueAt(propertyPath, holder.getProject());
                     if (valueAtPath == null) return;
 
                     //Collect the variables from the English value by the path of the property of the value being inspected
