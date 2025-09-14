@@ -58,7 +58,7 @@ class TranslationIsOriginalInspection extends LocalInspectionTool {
             @Override
             public void visitProperty(@NotNull JsonProperty property) {
                 if (property.getValue() instanceof JsonStringLiteral literal) {
-                    var propertyPath = String.join(".", getPropertyPath(property, session.getFile()));
+                    var propertyPath = getPropertyPath(property, session.getFile());
                     if (ignoredProperties.contains(propertyPath)) return;
 
                     String originalValueAtPath = OriginalLocalizationValuesCache.getInstance(holder.getProject()).getOriginalValues().get(propertyPath);

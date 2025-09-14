@@ -81,7 +81,7 @@ final class ShowTranslationInOtherLanguageIntention implements IntentionAction {
     @VisibleForTesting
     PopupStep<?> handleSelectedFile(JsonProperty parentProperty, PsiFile selectedTranslationFile, Project project, Editor editor, PsiFile psiFile) {
         //Get the path of the property as list of property names leading to it
-        var propertyPath = TranslationFileUtil.getPropertyPath(parentProperty, psiFile);
+        var propertyPath = TranslationFileUtil.getPropertyPathElements(parentProperty, psiFile);
 
         //Traverse the properties collected, in the selected translation file, from top to bottom,
         // until the selected property is reached.

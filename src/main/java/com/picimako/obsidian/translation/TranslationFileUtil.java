@@ -21,12 +21,22 @@ public final class TranslationFileUtil {
     public static final String ESLINTRC_JSON = ".eslintrc.json";
 
     /**
+     * Gets the path of the property at {@code startElement}, each property name delimited with a dot symbol.
+     *
+     * @param startElement a sub-element of a {@link JsonProperty} whose path is retrieved
+     * @param endElement used for the stop condition as the last element to stop the parent property collection at
+     */
+    public static String getPropertyPath(PsiElement startElement, PsiElement endElement) {
+        return String.join(".", getPropertyPathElements(startElement, endElement));
+    }
+
+    /**
      * Gets the path of the property as list of property names leading to it.
      *
      * @param startElement the element to get the path of
      * @param endElement   used for the stop condition as the last element to stop the parent property collection at
      */
-    public static List<String> getPropertyPath(PsiElement startElement, PsiElement endElement) {
+    public static List<String> getPropertyPathElements(PsiElement startElement, PsiElement endElement) {
         var propertyPath = compute(() -> collectParents(startElement, JsonProperty.class, true, e -> e.isEquivalentTo(endElement)))
             .stream()
             .map(JsonProperty::getName)

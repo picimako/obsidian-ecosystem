@@ -33,5 +33,14 @@
         </intentionAction>
 
         <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
+
+        <codeInsight.declarativeInlayProvider language="JSON"
+                                              implementationClass="com.picimako.obsidian.inlay.OriginalValueInlayHintsProvider"
+                                              isEnabledByDefault="false"
+                                              group="VALUES_GROUP"
+                                              providerId="obsidian.translations.original.value"
+                                              bundle="messages.ObsidianBundle"
+                                              nameKey="inlay.hint.translations.original.value"
+                                              descriptionKey="inlay.hint.translations.original.value.description"/>
     </extensions>
 </idea-plugin>

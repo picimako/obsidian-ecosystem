@@ -1,0 +1,11 @@
+{
+  "setting": {
+    "options": "Options",
+    "plugin": "Plugin",
+    "builtin-plugins": "Core plugins",
+    "plugin-options": "Plugin options",
+    "folder-path-example-placeholder": "Example: folder 1/folder 2",
+    "file-path-example-placeholder": "Example: folder/note",
+    "msg-restart-required": "Changing this option requires a restart to take effect."
+  }
+}

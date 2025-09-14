@@ -5,7 +5,7 @@ import static com.intellij.openapi.command.WriteCommandAction.writeCommandAction
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.TextRanges.endOffsetOf;
 import static com.picimako.obsidian.translation.TranslationFileUtil.findPropertyByPath;
-import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
+import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPathElements;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getTopLevelObjectOf;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.collectTranslationFiles;
@@ -88,7 +88,7 @@ final class GenerateTranslationInOthersIntention extends IntentionActionBase {
         @Nullable var nextSiblingProperty = getNextSiblingProperty(propertyToGenerate);
 
         //Get the path of the property as list of property names leading to it
-        var propertyPath = getPropertyPath(propertyToGenerate, psiFile);
+        var propertyPath = getPropertyPathElements(propertyToGenerate, psiFile);
         var topLevelObjectInEnJson = getTopLevelObjectOf(psiFile);
 
         var jsonGenerator = new JsonElementGenerator(project);

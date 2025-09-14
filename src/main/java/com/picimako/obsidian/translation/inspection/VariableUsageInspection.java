@@ -1,10 +1,5 @@
 package com.picimako.obsidian.translation.inspection;
 
-import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
-import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
-import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
-import static com.picimako.obsidian.translation.inspection.VariablesCollector.collectVariablesIn;
-
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.LocalInspectionToolSession;
 import com.intellij.codeInspection.ProblemHighlightType;
@@ -14,11 +9,16 @@ import com.intellij.json.psi.JsonProperty;
 import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.util.containers.SmartHashSet;
-import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import com.picimako.obsidian.messages.ObsidianBundle;
+import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
+
+import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
+import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
+import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
+import static com.picimako.obsidian.translation.inspection.VariablesCollector.collectVariablesIn;
 
 /**
  * Reports missing and invalid {@code {{...}}}-style variables in translation values.
@@ -38,7 +38,7 @@ final class VariableUsageInspection extends LocalInspectionTool {
             @Override
             public void visitProperty(@NotNull JsonProperty property) {
                 if (property.getValue() instanceof JsonStringLiteral literal && literal.getValue().length() >= STRING_WITH_VARIABLE_MINIMUM_LENGTH) {
-                    var propertyPath = String.join(".", getPropertyPath(property, session.getFile()));
+                    var propertyPath = getPropertyPath(property, session.getFile());
                     String valueAtPath = OriginalLocalizationValuesCache.getInstance(holder.getProject()).getOriginalValues().get(propertyPath);
                     if (valueAtPath == null) return;
 
