@@ -2,6 +2,7 @@ package com.picimako.obsidian.plugin.completion;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.Service;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Service(Service.Level.APP)
 public final class LucideIconService {
+    @Getter
     private final List<String> iconNames;
 
     public LucideIconService() {
@@ -1331,10 +1333,6 @@ public final class LucideIconService {
             "zoom-in",
             "zoom-out"
         );
-    }
-
-    public List<String> getIconNames() {
-        return iconNames;
     }
 
     public static LucideIconService getInstance() {

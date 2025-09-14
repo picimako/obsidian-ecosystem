@@ -27,6 +27,7 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.TextWithIcon;
 import com.picimako.obsidian.translation.TranslationFileUtil;
 import com.picimako.obsidian.translation.TranslationFilesCollector;
+import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -86,7 +87,7 @@ final class ShowTranslationInOtherLanguageIntention implements IntentionAction {
         //Traverse the properties collected, in the selected translation file, from top to bottom,
         // until the selected property is reached.
         //Start with a top-level property
-        var property = getTopLevelObjectOf(selectedTranslationFile).findProperty(propertyPath.get(0));
+        var property = getTopLevelObjectOf(selectedTranslationFile).findProperty(propertyPath.getFirst());
         if (property == null) return showErrorHint(selectedTranslationFile, propertyPath, project, editor);
 
         for (int i = 1; i < propertyPath.size(); i++) {
@@ -150,10 +151,8 @@ final class ShowTranslationInOtherLanguageIntention implements IntentionAction {
      * }
      * </pre>
      */
+    @NoArgsConstructor
     private static final class TranslationFileCellRenderer extends PsiElementListCellRenderer<JsonFile> {
-        public TranslationFileCellRenderer() {
-        }
-
         protected int getIconFlags() {
             return 1;
         }

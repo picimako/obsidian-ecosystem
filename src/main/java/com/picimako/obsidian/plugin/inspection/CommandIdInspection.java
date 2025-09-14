@@ -15,7 +15,6 @@ import com.intellij.lang.javascript.psi.ecma6.TypeScriptFunction;
 import com.intellij.psi.PsiElementVisitor;
 import com.picimako.obsidian.plugin.ManifestDataCache;
 import com.picimako.obsidian.settings.ObsidianProjectState;
-import com.picimako.obsidian.settings.ObsidianProjectType;
 import com.picimako.obsidian.messages.ObsidianBundle;
 import org.jetbrains.annotations.NotNull;
 

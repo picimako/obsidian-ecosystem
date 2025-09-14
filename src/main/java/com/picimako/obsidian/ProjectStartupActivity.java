@@ -10,7 +10,6 @@ import com.intellij.psi.PsiManager;
 import com.picimako.obsidian.plugin.ManifestDataCache;
 import com.picimako.obsidian.plugin.ManifestJsonListener;
 import com.picimako.obsidian.settings.ObsidianProjectState;
-import com.picimako.obsidian.settings.ObsidianProjectType;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesListener;
 import com.picimako.obsidian.translation.TranslationReader;

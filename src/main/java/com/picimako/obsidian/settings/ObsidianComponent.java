@@ -4,6 +4,7 @@ import com.intellij.openapi.ui.ComboBox;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.util.ui.FormBuilder;
 import com.picimako.obsidian.messages.ObsidianBundle;
+import lombok.Getter;
 
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ import javax.swing.*;
  * Provides the UI components for the plugin settings page.
  */
 public final class ObsidianComponent {
+    @Getter
     private final JPanel settingsPanel;
     private final ComboBox<ObsidianProjectType> obsidianProjectType;
 
@@ -21,10 +23,6 @@ public final class ObsidianComponent {
             .addLabeledComponent(new JBLabel(ObsidianBundle.message("settings.obsidian.project.type")), obsidianProjectType)
             .addComponentFillVertically(new JPanel(), 0)
             .getPanel();
-    }
-
-    public JPanel getSettingsPanel() {
-        return settingsPanel;
     }
 
     //Setters, getters
