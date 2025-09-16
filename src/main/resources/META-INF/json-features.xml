@@ -5,6 +5,11 @@
                          displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
 
         <localInspection
+                implementationClass="com.picimako.obsidian.translation.inspection.TranslationIsOriginalInspection"
+                id="obsidian.translation.is.original.json" language="JSON"
+                displayName="Translation is same as original" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR"/>
+
+        <localInspection
                 implementationClass="com.picimako.obsidian.plugin.inspection.PluginManifestInspection"
                 id="obsidian.manifest.json" language="JSON"
                 displayName="Plugin/Theme manifest.json issues" groupPath="Obsidian" groupName="Plugin/Themes" enabledByDefault="true" level="ERROR"/>
@@ -28,5 +33,14 @@
         </intentionAction>
 
         <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
+
+        <codeInsight.declarativeInlayProvider language="JSON"
+                                              implementationClass="com.picimako.obsidian.inlay.OriginalValueInlayHintsProvider"
+                                              isEnabledByDefault="false"
+                                              group="VALUES_GROUP"
+                                              providerId="obsidian.translations.original.value"
+                                              bundle="messages.ObsidianBundle"
+                                              nameKey="inlay.hint.translations.original.value"
+                                              descriptionKey="inlay.hint.translations.original.value.description"/>
     </extensions>
 </idea-plugin>

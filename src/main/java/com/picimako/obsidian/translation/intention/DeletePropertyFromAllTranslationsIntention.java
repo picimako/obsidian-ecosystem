@@ -4,7 +4,7 @@ import static com.intellij.openapi.command.WriteCommandAction.runWriteCommandAct
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 import static com.picimako.obsidian.TextRanges.endOffsetOf;
 import static com.picimako.obsidian.translation.TranslationFileUtil.findPropertyByPath;
-import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
+import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPathElements;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getTopLevelObjectOf;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.collectTranslationFiles;
@@ -54,7 +54,7 @@ final class DeletePropertyFromAllTranslationsIntention extends IntentionActionBa
         if (propertyToDelete == null) return;
 
         var translationFiles = collectTranslationFiles(projectRootDir, project, psiFile, true);
-        var propertyPath = getPropertyPath(propertyToDelete, psiFile);
+        var propertyPath = getPropertyPathElements(propertyToDelete, psiFile);
 
         if (!ApplicationManager.getApplication().isUnitTestMode()) {
             ProgressManager.getInstance().runProcessWithProgressSynchronously(() ->

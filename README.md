@@ -19,6 +19,8 @@ activities. You can download the plugin archive from the [download](download/obs
     * [Delete property from all translations](#delete-property-from-all-translations)
     * [Variable annotations](#variable-annotations)
     * [Variable usage inspections](#variable-usage-inspections)
+    * [Untranslated entries](#untranslated-entries)
+    * [Display original values inline](#display-original-values-inline)
 * [Plugins and Themes](#plugins-and-themes)
     * [JSON schema for manifest.json](#json-schema-for-manifestjson)
     * [manifest.json issues](#manifestjson-issues)
@@ -145,6 +147,34 @@ This inspection reports the following issues with `{{...}}` variables:
 or by other means.
 
 ![variable reports](assets/variable_reports.png)
+
+### Untranslated entries
+
+This inspection reports localization properties that are untranslated, i.e. have the same value as their original,
+English counterparts. This can aid translators to identify entries that are not yet translated.
+
+![untranslated_items](assets/untranslated_items.png)
+
+In the inspections settings there is a customizable list of JSON paths to ignore entries that doesn't need translation,
+like abbreviations, or are not allowed to be translated, like brand names.
+
+The feature comes with a default set of such ignored entries but one can remove or add any for language specific configuration.
+
+![untranslated_items_ignored](assets/untranslated_items_ignored.png)
+
+### Display original values inline
+
+An inlay hint is available in non-en.json files that displays the original, English values above all entries.
+
+This is an aid both during the creation of new translations and the maintenance of existing ones, but probably more for the latter.
+The translation file and en.json don't have to be open next to each other to compare strings, instead they appear inline.
+
+This feature is disabled by default, and can be enabled under Settings > Editor > Inlay Hints > Values > JSON.
+
+![original_values_inline](assets/original_values_inline.png)
+
+There are entries that start and/or end with whitespaces. The inlay hint texts of those are enclosed by '' characters, so that the enclosing
+whitespace characters become more prominent.
 
 ----
 

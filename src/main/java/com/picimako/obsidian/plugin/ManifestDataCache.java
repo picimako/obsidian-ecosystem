@@ -9,6 +9,7 @@ import com.intellij.openapi.components.Service;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.psi.PsiManager;
+import lombok.Getter;
 
 /**
  * Stores data read from the project's {@code manifest.json} file.
@@ -17,15 +18,12 @@ import com.intellij.psi.PsiManager;
  */
 @Service(Service.Level.PROJECT)
 public final class ManifestDataCache {
+    @Getter
     private final Manifest manifest = new Manifest();
     private final Project project;
 
     public ManifestDataCache(Project project) {
         this.project = project;
-    }
-
-    public Manifest getManifest() {
-        return manifest;
     }
 
     /**

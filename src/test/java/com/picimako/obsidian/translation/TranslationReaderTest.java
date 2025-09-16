@@ -17,6 +17,8 @@ public final class TranslationReaderTest extends BasePlatformTestCase {
     }
 
     public void testShouldReadOriginalAndCacheProperties() {
+        OriginalLocalizationValuesCache.getInstance(getProject()).getOriginalValues().clear();
+
         myFixture.copyFileToProject("en.json");
         var expectedValues = Map.of(
             "properties.types.option-multitext", "List",

@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.4.0]
+### Added
+- **Translations**: Added an inspection to report not translated localization entries, with a customizable set of properties to exclude from reporting.
+- **Translations**: Added inlay hints to entries of non-English translation files to shown their original, English values. The features is disabled by default.
+
 ## [0.3.0]
 ### Added
 - Uploaded separate IntelliJ Community and Ultimate plugin archives, so the plugin can be installed and used

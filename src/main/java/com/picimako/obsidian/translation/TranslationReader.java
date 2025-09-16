@@ -54,9 +54,7 @@ public final class TranslationReader {
     private static void handlePropertyListCaching(List<JsonProperty> properties, JsonObject topLevelObject, Project project) {
         for (var property : properties) {
             if (property.getValue() instanceof JsonStringLiteral literal) {
-                //Get the path of the property, each property name delimited with a .
-                var propertyPathAsList = getPropertyPath(literal, topLevelObject);
-                var propertyPath = String.join(".", propertyPathAsList);
+                var propertyPath = getPropertyPath(literal, topLevelObject);
 
                 //Save the property literal value mapped to its path
                 OriginalLocalizationValuesCache.getInstance(project).addLocalizationValue(propertyPath, literal.getValue());
