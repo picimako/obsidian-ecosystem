@@ -39,6 +39,7 @@ class TranslationIsOriginalInspection extends LocalInspectionTool {
         "interface.start-screen.mobile.label-obsidian-sync",
         "interface.start-screen.mobile.label-icloud",
         "interface.start-screen.mobile.icloud-missing",
+        "interface.url",
         "plugins.backlinks.ellipsis",
         "plugins.bookmarks.option-u-r-l",
         "plugins.bases.placeholder-formula",
