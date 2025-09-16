@@ -38,6 +38,10 @@ public class OriginalValueInlayHintsProviderTest extends DeclarativeInlayHintsPr
                 		"appearance": {
                 		  /*<# block ['' Currently applied font: ''] #>*/
                 		  "label-single-font-currently-in-effect": " Jelenleg alkalmazott betűtípus: "
+                		},
+                		"interface": {
+                		  /*<# block [This is a sandbox vault.\\nChanges you make in this vault will be lost.] #>*/
+                		  "msg-sandbox-vault": "Ez egy homokozó széf.\nAz itt végzett változtatások elvesznek."
                 		}
                     }
                 }

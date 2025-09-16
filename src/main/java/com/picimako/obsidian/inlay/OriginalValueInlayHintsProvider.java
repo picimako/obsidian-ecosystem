@@ -41,6 +41,8 @@ class OriginalValueInlayHintsProvider implements InlayHintsProvider {
                 //If a string starts or ends with a whitespace, wrap it in quotes so that those whitespaces become visible
                 // in the inlay hints
                 .map(value -> value.startsWith(WHITESPACE) || value.endsWith(WHITESPACE) ? DELIMITER + value + DELIMITER : value)
+                //Makes \n symbols appears as literals
+                .map(value -> value.replace("\n", "\\n"))
                 .ifPresent(valueAtPath -> sink.addPresentation(
                     new AboveLineIndentedPosition(property.getTextOffset(), 0, 0),
                     null,
