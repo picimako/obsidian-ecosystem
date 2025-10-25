@@ -20,7 +20,7 @@ import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGIN
  * Adds inlay hints above all localization properties with their original, English values.
  */
 @SuppressWarnings("UnstableApiUsage")
-class OriginalValueInlayHintsProvider implements InlayHintsProvider {
+public class OriginalValueInlayHintsProvider implements InlayHintsProvider {
     private static final SharedBypassCollector NO_OP_COLLECTOR = (host, sink) -> {
     };
     private static final String WHITESPACE = " ";
@@ -41,8 +41,11 @@ class OriginalValueInlayHintsProvider implements InlayHintsProvider {
                 //If a string starts or ends with a whitespace, wrap it in quotes so that those whitespaces become visible
                 // in the inlay hints
                 .map(value -> value.startsWith(WHITESPACE) || value.endsWith(WHITESPACE) ? DELIMITER + value + DELIMITER : value)
-                //Makes \n symbols appears as literals
+                //Makes \n symbols appear as literals
                 .map(value -> value.replace("\n", "\\n"))
+                //Makes escaped double-quotes (\") characters appear as literals
+                .map(value -> value.replace("\"", "\\\""))
+                .map(value -> value.replace(" ", "[NBSP]"))
                 .ifPresent(valueAtPath -> sink.addPresentation(
                     new AboveLineIndentedPosition(property.getTextOffset(), 0, 0),
                     null,

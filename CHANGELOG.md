@@ -8,7 +8,7 @@
 ### Added
 - **Translations**: Added the `interface.mobile.action-insert-text-into-file` property to the list of ignored ones
 when it comes to untranslated entries.
-- 
+- **Translations**: Render \" and NBSP characters and symbols in the original translations inlay hints.
 
 ## [0.4.0]
 ### Added
