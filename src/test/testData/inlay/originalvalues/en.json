@@ -11,7 +11,17 @@
       "label-single-font-currently-in-effect": " Currently applied font: "
     },
     "interface": {
-      "msg-sandbox-vault": "This is a sandbox vault.\nChanges you make in this vault will be lost."
+      "msg-sandbox-vault": "This is a sandbox vault.\nChanges you make in this vault will be lost.",
+      "start-screen": {
+        "mobile": {
+          "label-start-screen": "Your thoughts are yours."
+        }
+      }
+    }
+  },
+  "plugin": {
+    "bases": {
+      "msg-error-must-be-a-type": "\"{{ key }}\" must be a {{ type }}"
     }
   }
 }

@@ -1,4 +1,4 @@
-package com.picimako.obsidian.inlay;
+package com.picimako.obsidian.translation.inlay;
 
 import com.intellij.testFramework.utils.inlays.declarative.DeclarativeInlayHintsProviderTestCase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
@@ -41,8 +41,20 @@ public class OriginalValueInlayHintsProviderTest extends DeclarativeInlayHintsPr
                 		},
                 		"interface": {
                 		  /*<# block [This is a sandbox vault.\\nChanges you make in this vault will be lost.] #>*/
-                		  "msg-sandbox-vault": "Ez egy homokozó széf.\nAz itt végzett változtatások elvesznek."
+                		  "msg-sandbox-vault": "Ez egy homokozó széf.\nAz itt végzett változtatások elvesznek.",
+                		  "start-screen": {
+                            "mobile": {
+                              /*<# block [Your thoughts are[NBSP]yours.] #>*/
+                              "label-start-screen": "A gondolatai csakis az  Öné."
+                            }
+                          }
                 		}
+                    },
+                    "plugin": {
+                      "bases": {
+                        /*<# block [\\"{{ key }}\\" must be a {{ type }}] #>*/
+                        "msg-error-must-be-a-type": "\\"{{ key }}\\" {{ type }} típusú kell legyen"
+                      }
                     }
                 }
                 """, new OriginalValueInlayHintsProvider());
