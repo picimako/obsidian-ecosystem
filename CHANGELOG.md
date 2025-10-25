@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.5.0]
+### Added
+- **Translations**: Added the `interface.mobile.action-insert-text-into-file` property to the list of ignored ones
+when it comes to untranslated entries.
+- 
+
 ## [0.4.0]
 ### Added
 - **Translations**: Added an inspection to report not translated localization entries, with a customizable set of properties to exclude from reporting.

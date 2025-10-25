@@ -28,14 +28,15 @@ import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGIN
  */
 class TranslationIsOriginalInspection extends LocalInspectionTool {
     /**
-     * There may be certain properties that do not need translation, or is not allowed (e.g. brand names), thus
-     * they are excluded from reporting.
+     * There may be certain properties that do not need translation, or are not allowed (e.g. brand names),
+     * thus they are excluded from reporting.
      */
     public OrderedSet<String> ignoredProperties = new OrderedSet<>(List.of(
         "setting.account.label-vip",
         "editor.print-modal.setting-page-size-a3",
         "editor.print-modal.setting-page-size-a4",
         "editor.print-modal.setting-page-size-a5",
+        "interface.mobile.action-insert-text-into-file",
         "interface.start-screen.mobile.label-obsidian-sync",
         "interface.start-screen.mobile.label-icloud",
         "interface.start-screen.mobile.icloud-missing",
