@@ -1,4 +1,4 @@
-package com.picimako.obsidian.inlay;
+package com.picimako.obsidian.translation.inlay;
 
 import com.intellij.testFramework.utils.inlays.declarative.DeclarativeInlayHintsProviderTestCase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;

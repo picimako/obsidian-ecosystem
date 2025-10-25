@@ -35,7 +35,7 @@
         <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
 
         <codeInsight.declarativeInlayProvider language="JSON"
-                                              implementationClass="com.picimako.obsidian.inlay.OriginalValueInlayHintsProvider"
+                                              implementationClass="com.picimako.obsidian.translation.inlay.OriginalValueInlayHintsProvider"
                                               isEnabledByDefault="false"
                                               group="VALUES_GROUP"
                                               providerId="obsidian.translations.original.value"

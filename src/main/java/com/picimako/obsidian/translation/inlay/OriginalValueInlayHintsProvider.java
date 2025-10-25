@@ -1,4 +1,4 @@
-package com.picimako.obsidian.inlay;
+package com.picimako.obsidian.translation.inlay;
 
 import com.intellij.codeInsight.hints.declarative.*;
 import com.intellij.json.psi.JsonFile;
