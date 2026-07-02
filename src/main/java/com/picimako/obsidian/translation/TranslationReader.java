@@ -1,6 +1,6 @@
 package com.picimako.obsidian.translation;
 
-import static com.intellij.openapi.application.ReadAction.compute;
+import static com.intellij.openapi.application.ReadAction.computeBlocking;
 import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
 
@@ -35,7 +35,7 @@ public final class TranslationReader {
             return;
         }
 
-        var originalLocFile = compute(() -> {
+        var originalLocFile = computeBlocking(() -> {
             var enJson = projectRootDir.findFileByRelativePath(ORIGINAL_LOCALIZATION_FILE);
             return (JsonFile) PsiManager.getInstance(project).findFile(enJson);
         });
@@ -47,7 +47,7 @@ public final class TranslationReader {
      * In essence, this is the same as {@link #readOriginal(Project)}, but for cases when the file is already available.
      */
     public static void readOriginal(JsonFile translationFile, Project project) {
-        var topLevelObject = (JsonObject) compute(translationFile::getTopLevelValue);
+        var topLevelObject = (JsonObject) computeBlocking(translationFile::getTopLevelValue);
         handlePropertyListCaching(topLevelObject.getPropertyList(), topLevelObject, project);
     }
 

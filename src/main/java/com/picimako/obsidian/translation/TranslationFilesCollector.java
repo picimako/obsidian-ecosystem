@@ -1,6 +1,7 @@
 package com.picimako.obsidian.translation;
 
-import com.intellij.openapi.application.ReadAction;
+import static com.intellij.openapi.application.ReadAction.computeBlocking;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
@@ -47,7 +48,7 @@ public final class TranslationFilesCollector {
                 return includeFileAtInvocation
                        ? isNotPackageOrEslintrcJson
                        : isNotPackageOrEslintrcJson && !fileName.equals(fileAtInvocation.getName());
-            }).map(jsonFile -> ReadAction.compute(() -> PsiManager.getInstance(project).findFile(jsonFile)))
+            }).map(jsonFile -> computeBlocking(() -> PsiManager.getInstance(project).findFile(jsonFile)))
             .filter(Objects::nonNull)
             .toList();
     }

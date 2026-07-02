@@ -1,5 +1,6 @@
 package com.picimako.obsidian.translation.intention;
 
+import static com.intellij.openapi.application.ReadAction.computeBlocking;
 import static com.intellij.openapi.command.WriteCommandAction.runWriteCommandAction;
 import static com.intellij.openapi.command.WriteCommandAction.writeCommandAction;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
@@ -19,7 +20,6 @@ import com.intellij.json.psi.JsonProperty;
 import com.intellij.json.psi.JsonPsiUtil;
 import com.intellij.json.psi.JsonValue;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.progress.ProgressIndicator;
@@ -105,7 +105,7 @@ final class GenerateTranslationInOthersIntention extends IntentionActionBase {
 
             for (int i = 0; i < propertyPath.size(); i++) {
                 String name = propertyPath.get(i);
-                var property = ReadAction.compute(() -> objectValue.get().findProperty(name));
+                var property = computeBlocking(() -> objectValue.get().findProperty(name));
 
                 //If the property doesn't exist yet, add it to the current property object value
                 if (property == null) {
