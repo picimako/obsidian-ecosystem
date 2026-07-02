@@ -1,4 +1,5 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<!--suppress PluginXmlPluginLogo -->
 <idea-plugin>
     <id>com.picimako.obsidian.ecosystem</id>
     <name>Obsidian Ecosystem</name>
@@ -7,21 +8,47 @@
     <resource-bundle>messages.ObsidianBundle</resource-bundle>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends optional="true" config-file="json-features.xml">com.intellij.modules.json</depends>
-    <depends optional="true" config-file="js-features.xml">JavaScript</depends>
+    <depends>com.intellij.modules.json</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.picimako.obsidian.ProjectStartupActivity"/>
 
-        <!-- Plugin Settings -->
-        <projectConfigurable groupId="tools"
-                             instance="com.picimako.obsidian.settings.ObsidianProjectConfigurable"
-                             id="ObsidianProjectConfigurable"
-                             displayName="Obsidian" nonDefaultProject="true"/>
-        <projectService serviceImplementation="com.picimako.obsidian.settings.ObsidianProjectState"/>
-    </extensions>
+        <localInspection implementationClass="com.picimako.obsidian.translation.inspection.VariableUsageInspection"
+                         id="obsidian.variable.usage" language="JSON"
+                         displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
 
-    <extensions defaultExtensionNs="JavaScript.JsonSchema">
-        <ProviderFactory implementation="com.picimako.obsidian.plugin.schema.ObsidianPluginManifestSchemaProviderFactory"/>
+        <localInspection
+                implementationClass="com.picimako.obsidian.translation.inspection.TranslationIsOriginalInspection"
+                id="obsidian.translation.is.original.json" language="JSON"
+                displayName="Translation is same as original" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR"/>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.ShowTranslationInOtherLanguageIntention</className>
+        </intentionAction>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.GenerateTranslationInOthersIntention</className>
+        </intentionAction>
+
+        <intentionAction>
+            <language>JSON</language>
+            <category>Obsidian/Translations</category>
+            <className>com.picimako.obsidian.translation.intention.DeletePropertyFromAllTranslationsIntention</className>
+        </intentionAction>
+
+        <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
+
+        <codeInsight.declarativeInlayProvider language="JSON"
+                                              implementationClass="com.picimako.obsidian.translation.inlay.OriginalValueInlayHintsProvider"
+                                              isEnabledByDefault="false"
+                                              group="VALUES_GROUP"
+                                              providerId="obsidian.translations.original.value"
+                                              bundle="messages.ObsidianBundle"
+                                              nameKey="inlay.hint.translations.original.value"
+                                              descriptionKey="inlay.hint.translations.original.value.description"/>
     </extensions>
 </idea-plugin>
