@@ -2,9 +2,9 @@
 
 <!-- Plugin description -->
 This JetBrains IDE plugin provides various features for those that work with [Obsidian.md](https://obsidian.md)'s
-translations (mainly this area) and plugin/theme development.
+translations.
 
-The plugin is not released on the JetBrains Marketplace or on any other outlet. It's main purpose is to demonstrate
+The plugin is not released on the JetBrains Marketplace or on any other outlet. Its main purpose is to demonstrate
 that such small aspects of an ecosystem like translations can have meaningful IDE integrations, even if it is for a
 small number of contributors. However, the plugin is functional, so feel free to use it for actual Obsidian translation
 activities. You can download the plugin archive from the [download](download/obsidian-ecosystem-0.1.0.zip) directory.
