@@ -14,18 +14,13 @@ activities. You can download the plugin archive from the [download](download/obs
 
 <!-- TOC -->
 * [Translations](#translations)
-    * [Show translation of property in another language](#show-translation-of-property-in-another-language)
-    * [Generate property in en.json into all other translation files](#generate-property-in-enjson-into-all-other-translation-files)
-    * [Delete property from all translations](#delete-property-from-all-translations)
-    * [Variable annotations](#variable-annotations)
-    * [Variable usage inspections](#variable-usage-inspections)
-    * [Untranslated entries](#untranslated-entries)
-    * [Display original values inline](#display-original-values-inline)
-* [Plugins and Themes](#plugins-and-themes)
-    * [JSON schema for manifest.json](#json-schema-for-manifestjson)
-    * [manifest.json issues](#manifestjson-issues)
-    * [Completion of lucide.dev icons](#completion-of-lucidedev-icons)
-    * [Reporting command ids prefixed with the plugin id](#reporting-command-ids-prefixed-with-the-plugin-id)
+  * [Show translation of property in another language](#show-translation-of-property-in-another-language)
+  * [Generate property in en.json into all other translation files](#generate-property-in-enjson-into-all-other-translation-files)
+  * [Delete property from all translations](#delete-property-from-all-translations)
+  * [Variable annotations](#variable-annotations)
+  * [Variable usage inspections](#variable-usage-inspections)
+  * [Untranslated entries](#untranslated-entries)
+  * [Display original values inline](#display-original-values-inline)
 <!-- TOC -->
 
 ## Translations
@@ -175,41 +170,3 @@ This feature is disabled by default, and can be enabled under Settings > Editor 
 
 There are entries that start and/or end with whitespaces. The inlay hint texts of those are enclosed by '' characters, so that the enclosing
 whitespace characters become more prominent.
-
-----
-
-## Plugins and Themes
-
-### JSON schema for manifest.json
-
-Since the `manifest.json` has various properties depending on the type of Obsidian plugin project, with different required states,
-JSON schema is available for both plugins and themes that automatically provide code completion and validation.
-
-The schemas are assigned to the `manifest.json` when the project is set as a plugin or theme project in the IDE settings
-under <kbd>Settings</kbd> > <kbd>Tools</kbd> > <kbd>Obsidian</kbd>.
-
-![Plugin schema completion](assets/plugin_schema_completion.png)
-
-### manifest.json issues
-
-This inspection reports the following issues in the `manifest.json` file:
-- If the `description` property is longer than 250 characters.
-- If the `description` property doesn't end with a dot.
-- If the name of the project root directory doesn't match the `name` property.
-
-### Completion of lucide.dev icons
-
-This code completion provides names of lucide.dev icons in the arguments of `setIcon()` and `addRibbonIcon()` function calls.
-
-Based on the Obsidian [Icons](https://docs.obsidian.md/Plugins/User+interface/Icons) documentation, the names are provided only up to lucide v0.292.0.
-
-![Icon completion](assets/icon_completion.png)
-
-### Reporting command ids prefixed with the plugin id
-
-An inspection takes care of reporting command ids in `Plugin.addCommand()` function calls that are prefixed with
-the plugin id. According to the
-[Submission requirements for plugins](https://docs.obsidian.md/Plugins/Releasing/Submission+requirements+for+plugins#Don't%20include%20the%20plugin%20ID%20in%20the%20command%20ID)
-page it is done automatically.
-
-![Command id prefixed with plugin id](assets/command_id_prefixed_with_plugin_id.png)
