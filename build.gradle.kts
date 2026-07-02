@@ -1,14 +1,13 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
-import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 plugins {
-    id("java") // Java support
-    alias(libs.plugins.kotlin) // Kotlin support
-    alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
-    alias(libs.plugins.changelog) // Gradle Changelog Plugin
-    id("io.freefair.lombok") version "8.14.2"
+    id("java")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.intelliJPlatform)
+    alias(libs.plugins.changelog)
+    id("io.freefair.lombok") version "9.5.0"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -32,9 +31,7 @@ repositories {
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     testImplementation(libs.junit)
-    //See https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-faq.html#missing-opentest4j-dependency-in-test-framework
-    testImplementation("org.opentest4j:opentest4j:1.3.0")
-    testImplementation("org.assertj:assertj-core:3.26.3")
+    testImplementation("org.assertj:assertj-core:3.27.7")
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
@@ -47,9 +44,7 @@ dependencies {
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
         pluginVerifier()
-        //For BasePlatformTestCase
         testFramework(TestFrameworkType.Platform)
-        //Required for 'LightJavaCodeInsightFixtureTestCase'
         testFramework(TestFrameworkType.Plugin.Java)
     }
 }
@@ -98,19 +93,6 @@ intellijPlatform {
     }
 }
 
-intellijPlatformTesting {
-    val runTestsInIJUltimate by intellijPlatformTesting.testIde.registering {
-        type = IntelliJPlatformType.IntellijIdeaUltimate
-        version = "2025.1"
-        task {
-            useJUnit {
-                isScanForTestClasses = false
-                include("**/*Test.class")
-            }
-        }
-    }
-}
-
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
     groups.empty()
@@ -120,5 +102,12 @@ changelog {
 tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
+    }
+
+    test {
+        useJUnit {
+            isScanForTestClasses = false
+            include("**/*Test.class")
+        }
     }
 }

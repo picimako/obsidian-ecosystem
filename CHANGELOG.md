@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.6.0]
+### Changed
+- Updated supported IDE range to 2026.1+.
+- Deleted all plugin and theme related features. Only the translation related ones remain.
+
 ## [0.5.0]
 ### Added
 - **Translations**: Added the `interface.mobile.action-insert-text-into-file` property to the list of ignored ones

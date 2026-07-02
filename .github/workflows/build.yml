@@ -22,7 +22,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
 
   # Prepare the environment and build the plugin
@@ -40,42 +40,31 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       # Build plugin
       - name: Build plugin
         run: ./gradlew buildPlugin
 
-      # Prepare plugin archive content for creating artifact
-      - name: Prepare Plugin Artifact
-        id: artifact
-        shell: bash
-        run: |
-          cd ${{ github.workspace }}/build/distributions
-          FILENAME=`ls *.zip`
-          unzip "$FILENAME" -d content
-
-          echo "filename=${FILENAME:0:-4}" >> $GITHUB_OUTPUT
-
       # Store an already-built plugin as an artifact for downloading
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.artifact.outputs.filename }}
-          path: ./build/distributions/content/*/*
+          name: plugin-distribution
+          path: ./build/distributions/*.zip
 
-  # Run tests and upload a code coverage report
+  # Run tests and upload test reports on failure
   test:
     name: Test
     needs: [ build ]
@@ -91,18 +80,18 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
           cache-read-only: true
 
@@ -113,7 +102,7 @@ jobs:
       # Collect Tests Result of failed tests
       - name: Collect Tests Result
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tests-result
           path: ${{ github.workspace }}/build/reports/tests
@@ -134,18 +123,18 @@ jobs:
 
       # Check out the current repository
       - name: Fetch Sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Set up the Java environment for the next steps
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: zulu
           java-version: 21
 
       # Setup Gradle
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
         with:
           cache-read-only: true
 
@@ -156,7 +145,7 @@ jobs:
       # Collect Plugin Verifier Result
       - name: Collect Plugin Verifier Result
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: pluginVerifier-result
           path: ${{ github.workspace }}/build/reports/pluginVerifier

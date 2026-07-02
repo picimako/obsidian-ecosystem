@@ -1,5 +1,9 @@
 package com.picimako.obsidian.translation;
 
+import static com.intellij.openapi.application.ReadAction.computeBlocking;
+import static com.intellij.psi.util.PsiTreeUtil.collectParents;
+import static java.util.stream.Collectors.toList;
+
 import com.intellij.json.psi.JsonFile;
 import com.intellij.json.psi.JsonObject;
 import com.intellij.json.psi.JsonProperty;
@@ -8,10 +12,6 @@ import com.intellij.psi.PsiFile;
 
 import java.util.Collections;
 import java.util.List;
-
-import static com.intellij.openapi.application.ReadAction.compute;
-import static com.intellij.psi.util.PsiTreeUtil.collectParents;
-import static java.util.stream.Collectors.toList;
 
 /**
  * Various utilities for JSON translation files.
@@ -37,7 +37,7 @@ public final class TranslationFileUtil {
      * @param endElement   used for the stop condition as the last element to stop the parent property collection at
      */
     public static List<String> getPropertyPathElements(PsiElement startElement, PsiElement endElement) {
-        var propertyPath = compute(() -> collectParents(startElement, JsonProperty.class, true, e -> e.isEquivalentTo(endElement)))
+        var propertyPath = computeBlocking(() -> collectParents(startElement, JsonProperty.class, true, e -> e.isEquivalentTo(endElement)))
             .stream()
             .map(JsonProperty::getName)
             .collect(toList());
@@ -53,13 +53,13 @@ public final class TranslationFileUtil {
      * @param topLevelObject the top level object in a translation file
      */
     public static JsonProperty findPropertyByPath(List<String> path, JsonObject topLevelObject) {
-        var property = compute(() -> topLevelObject.findProperty(path.getFirst()));
+        var property = computeBlocking(() -> topLevelObject.findProperty(path.getFirst()));
 
         for (int i = 1; i < path.size(); i++) {
             final int index = i;
             //Go one level deeper in the property hierarchy
             if (property.getValue() instanceof JsonObject objectValue) {
-                property = compute(() -> objectValue.findProperty(path.get(index)));
+                property = computeBlocking(() -> objectValue.findProperty(path.get(index)));
                 continue;
             }
 
@@ -76,7 +76,7 @@ public final class TranslationFileUtil {
      * This method assumes that the top level value is an object.
      */
     public static JsonObject getTopLevelObjectOf(PsiFile jsonFile) {
-        return compute(() -> (JsonObject) ((JsonFile) jsonFile).getTopLevelValue());
+        return computeBlocking(() -> (JsonObject) ((JsonFile) jsonFile).getTopLevelValue());
     }
 
     public static boolean isPackageOrEslintrcJson(String fileName) {
