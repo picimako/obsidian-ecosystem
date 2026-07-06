@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.7.0]
+### Changed
+- Deleted all features that are no longer relevant to the obsidian-translations project's new structure.
+- The new localization files are now handled as Ini files (using the Ini plugin). A language substitutor handles that.
+
 ## [0.6.0]
 ### Changed
 - Updated supported IDE range to 2026.1+.
