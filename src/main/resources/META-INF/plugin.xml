@@ -8,47 +8,39 @@
     <resource-bundle>messages.ObsidianBundle</resource-bundle>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.json</depends>
+    <depends>com.jetbrains.plugins.ini4idea</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.picimako.obsidian.ProjectStartupActivity"/>
 
+        <lang.substitutor language="TEXT" implementationClass="com.picimako.obsidian.translation.lang.IniLanguageSubstitutor"/>
+
         <localInspection implementationClass="com.picimako.obsidian.translation.inspection.VariableUsageInspection"
-                         id="obsidian.variable.usage" language="JSON"
+                         id="obsidian.variable.usage" language="Ini"
                          displayName="Translation variables usage" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR" />
 
         <localInspection
-                implementationClass="com.picimako.obsidian.translation.inspection.TranslationIsOriginalInspection"
-                id="obsidian.translation.is.original.json" language="JSON"
+                implementationClass="com.picimako.obsidian.translation.inspection.MissingTranslationInspection"
+                id="obsidian.translation.is.original.json" language="Ini"
                 displayName="Translation is same as original" groupPath="Obsidian" groupName="Translations" enabledByDefault="true" level="ERROR"/>
 
         <intentionAction>
-            <language>JSON</language>
+            <language>Ini</language>
             <category>Obsidian/Translations</category>
             <className>com.picimako.obsidian.translation.intention.ShowTranslationInOtherLanguageIntention</className>
         </intentionAction>
 
-        <intentionAction>
-            <language>JSON</language>
-            <category>Obsidian/Translations</category>
-            <className>com.picimako.obsidian.translation.intention.GenerateTranslationInOthersIntention</className>
-        </intentionAction>
-
-        <intentionAction>
-            <language>JSON</language>
-            <category>Obsidian/Translations</category>
-            <className>com.picimako.obsidian.translation.intention.DeletePropertyFromAllTranslationsIntention</className>
-        </intentionAction>
-
-        <annotator language="JSON" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
-
-        <codeInsight.declarativeInlayProvider language="JSON"
-                                              implementationClass="com.picimako.obsidian.translation.inlay.OriginalValueInlayHintsProvider"
-                                              isEnabledByDefault="false"
-                                              group="VALUES_GROUP"
-                                              providerId="obsidian.translations.original.value"
-                                              bundle="messages.ObsidianBundle"
-                                              nameKey="inlay.hint.translations.original.value"
-                                              descriptionKey="inlay.hint.translations.original.value.description"/>
+        <annotator language="Ini" implementationClass="com.picimako.obsidian.translation.annotator.VariableAnnotator"/>
     </extensions>
+
+    <actions>
+        <!--suppress PluginXmlI18n -->
+        <action id="Obsidian.ToggleIni"
+                class="com.picimako.obsidian.translation.lang.IniToggleAction"
+                text="Enable INI sytax"
+                icon="AllIcons.Debugger.Threads">
+            <add-to-group group-id="EditorPopupMenu2" anchor="first"/>
+            <add-to-group group-id="EditorContextBarMenu"/>
+        </action>
+    </actions>
 </idea-plugin>
