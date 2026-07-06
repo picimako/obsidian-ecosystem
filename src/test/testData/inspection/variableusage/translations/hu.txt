@@ -1,0 +1,7 @@
+[nouns.character-with-count]
+original={{count}} character
+translation=<error descr="The following variables are invalid: cou. Valid ones are: count"><error descr="The following variables are not used from the English value: count">{{cou}} karakter</error></error>
+
+[word-with-count]
+original={{count}} word
+translation=<error descr="The following variables are not used from the English value: count">1 szo</error>

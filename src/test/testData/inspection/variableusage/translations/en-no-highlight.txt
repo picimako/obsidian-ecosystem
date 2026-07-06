@@ -1,0 +1,7 @@
+[nouns.character-with-count]
+original={{cou}} character
+translation=
+
+[word-with-count]
+original=1 word
+translation=

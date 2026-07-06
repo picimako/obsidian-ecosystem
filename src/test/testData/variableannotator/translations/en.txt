@@ -1,0 +1,7 @@
+[pdf.action-copy-page-link]
+original=Copy link to page {{page}}
+translation=
+
+[psd.msg-max-search-results]
+original={{current}} of over {{limit}} matches
+translation=

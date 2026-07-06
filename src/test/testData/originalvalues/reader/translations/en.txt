@@ -1,0 +1,23 @@
+[properties.types.option-multitext]
+original=List
+translation=
+
+[properties.types.option-checkbox]
+original=Checkbox
+translation=
+
+[properties.value-suggestion.instruction-link-note]
+original=to link note
+translation=
+
+[properties.value-suggestion.instruction-dismiss]
+original=to dismiss
+translation=
+
+[properties.option-property-type]
+original=Property type
+translation=
+
+[properties.msg-empty-property-name]
+original=Property name cannot be empty.
+translation=

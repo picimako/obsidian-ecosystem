@@ -1,0 +1,7 @@
+[setting.options]
+original=Options
+translation=
+
+[setting.editor.name]
+original=Editor
+translation=

@@ -1,0 +1,7 @@
+[setting.options]
+original=Settings
+translation=Beállítások
+
+[setting.editor.name]
+original=Editor
+translation=Szer<caret>kesztő

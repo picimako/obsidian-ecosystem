@@ -1,0 +1,7 @@
+[nouns.character-with-count]
+original={{count}} character
+translation=
+
+[word-with-count]
+original={{count}} word
+translation=

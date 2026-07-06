@@ -1,7 +1,0 @@
-{
-  "nouns": {
-    "count": "{{count}}",
-    "word-with-count": "{{count}} word",
-    "word-with-count_plural": "{{count}} words"
-  }
-}

@@ -1,0 +1,7 @@
+[pdf.action-copy-page-link]
+original=Copy link to page <info descr="null">{{</info><info descr="null">page</info><info descr="null">}}</info>
+translation=
+
+[psd.msg-max-search-results]
+original=<info descr="null">{{</info><info descr="null">current</info><info descr="null">}}</info> of over <info descr="null">{{</info><info descr="null">limit</info><info descr="null">}}</info> matches
+translation=

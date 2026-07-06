@@ -1,0 +1,11 @@
+[plugins.bases.label-sort-z-a]
+original=Z → A
+translation=Z → A
+
+[nouns.word-with-count]
+original={{count}} word
+translation=
+
+[nouns.word-with-count_plural]
+original={{count}} words
+translation=
