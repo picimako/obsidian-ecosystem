@@ -4,8 +4,7 @@ import com.intellij.codeInspection.InspectionProfileEntry;
 import com.picimako.obsidian.InspectionTestBase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import com.picimako.obsidian.translation.TranslationReader;
-import com.picimako.obsidian.translation.lang.IniToggleActionKt;
-import com.picimako.obsidian.translation.settings.ObsidianSettings;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
 
 /**
  * Integration test for {@link MissingTranslationInspection}.
@@ -25,8 +24,7 @@ public final class MissingTranslationInspectionTest extends InspectionTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        getProject().getService(ObsidianSettings.class).setIniFileTypeOverrideEnabled(true);
-        IniToggleActionKt.applyIniFileTypeOverride(getProject(), true);
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
     }
 
     public void testNoHighlightingInEnTxt() {

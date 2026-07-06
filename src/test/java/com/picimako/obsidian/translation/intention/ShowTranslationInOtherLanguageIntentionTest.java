@@ -1,14 +1,15 @@
 package com.picimako.obsidian.translation.intention;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.json.psi.JsonProperty;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
+import ini4idea.lang.psi.IniFile;
+import ini4idea.lang.psi.IniSection;
 
 /**
  * Integration test for {@link ShowTranslationInOtherLanguageIntention}.
@@ -25,160 +26,54 @@ public final class ShowTranslationInOtherLanguageIntentionTest extends Intention
         return "src/test/testData/intention/showtranslation";
     }
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
+    }
+
     //Availability
 
     public void testNotAvailableInNonObsidianTranslationsProject() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(false);
 
-        checkIntentionIsNotAvailable("hu.json", """
-            {
-            	"setting": {
-            		"options": "Beállítások",
-            		"editor": {
-            			"name": "Szer<caret>kesztő"
-            		}
-            	}
-            }
-            """);
+        checkIntentionIsNotAvailable("translations/pl.txt");
     }
 
-    public void testNotAvailableInNonJsonFile() {
+    public void testNotAvailableInNonTxtFile() {
         setProjectAsObsidianTranslations();
 
-        checkIntentionIsNotAvailable("hu.md", "<caret>");
+        checkIntentionIsNotAvailable("translations/hu.md");
     }
 
-    public void testNotAvailableInPackageJson() {
+    public void testNotAvailableForElementWithoutParentSection() {
         setProjectAsObsidianTranslations();
 
-        checkIntentionIsNotAvailable("package.json", "<caret>");
-    }
-
-    public void testNotAvailableInEslintrcJson() {
-        setProjectAsObsidianTranslations();
-
-        checkIntentionIsNotAvailable(".eslintrc.json", "<caret>");
-    }
-
-    public void testNotAvailableForElementWithoutParentProperty() {
-        setProjectAsObsidianTranslations();
-
-        checkIntentionIsNotAvailable("hu.json", """
-            {<caret>
-            	"setting": {
-            		"options": "Beállítások",
-            		"editor": {
-            			"name": "Szerkesztő"
-            		}
-            	}
-            }
-            """);
-    }
-
-    public void testNotAvailableForNonStringValueParentProperty() {
-        setProjectAsObsidianTranslations();
-
-        checkIntentionIsNotAvailable("hu.json", """
-            {
-            	"setting": {<caret>
-            		"options": "Beállítások",
-            		"editor": {
-            			"name": "Szerkesztő"
-            		}
-            	}
-            }
-            """);
+        checkIntentionIsNotAvailable("translations/jp.txt");
     }
 
     public void testAvailable() {
         setProjectAsObsidianTranslations();
 
-        checkIntentionIsAvailable("hu.json", """
-            {
-            	"setting": {
-            		"options": "Beállítások",
-            		"editor": {
-            			"name": "Sz<caret>erkesztő"
-            		}
-            	}
-            }
-            """);
+        checkIntentionIsAvailable("translations/nl.txt");
     }
 
     //Invocation
 
-    public void testThrowsErrorWhenPropertyIsNotFoundInSelectedFileDueToMissingProperty() {
-        setProjectAsObsidianTranslations();
-
-        var selectedFile = myFixture.copyFileToProject("en.json");
-        var selectedPsiFile = PsiManager.getInstance(getProject()).findFile(selectedFile);
-
-        var psiFile = myFixture.configureByText("hu.json", """
-            {
-            	"setting": {
-            		"options": "Beállítások",
-            		"editor": {
-            			"non-existent": "S<caret>zerkesztő"
-            		}
-            	}
-            }
-            """);
-        var parentProperty = PsiTreeUtil.getParentOfType(psiFile.findElementAt(myFixture.getCaretOffset()), JsonProperty.class);
-
-        assertThatExceptionOfType(Exception.class)
-            .isThrownBy(() -> new ShowTranslationInOtherLanguageIntention()
-                .handleSelectedFile(parentProperty, selectedPsiFile, getProject(), myFixture.getEditor(), psiFile))
-            .withMessage("This property <code>setting.editor.non-existent</code> is not present in <code>en.json</code>.");
-    }
-
-    public void testThrowsErrorWhenPropertyIsNotFoundInSelectedFileDueToMissingParent() {
-        setProjectAsObsidianTranslations();
-
-        var selectedFile = myFixture.copyFileToProject("en.json");
-        var selectedPsiFile = PsiManager.getInstance(getProject()).findFile(selectedFile);
-
-        var psiFile = myFixture.configureByText("hu.json", """
-            {
-                	"setting": {
-                		"options": "Beállítások",
-                		"non-existent": {
-                			"name": "Sz<caret>erkesztő"
-                		}
-                	}
-                }
-            """);
-        var parentProperty = PsiTreeUtil.getParentOfType(psiFile.findElementAt(myFixture.getCaretOffset()), JsonProperty.class);
-
-        assertThatExceptionOfType(Exception.class)
-            .isThrownBy(() -> new ShowTranslationInOtherLanguageIntention()
-                .handleSelectedFile(parentProperty, selectedPsiFile, getProject(), myFixture.getEditor(), psiFile))
-            .withMessage("This property <code>setting.non-existent.name</code> is not present in <code>en.json</code>.");
-    }
-
     public void testNavigatesToMatchingProperty() {
         setProjectAsObsidianTranslations();
 
-        var selectedFile = myFixture.copyFileToProject("en.json");
-        var selectedPsiFile = PsiManager.getInstance(getProject()).findFile(selectedFile);
+        var selectedFile = myFixture.copyFileToProject("translations/en.txt");
+        var selectedPsiFile = (IniFile) PsiManager.getInstance(getProject()).findFile(selectedFile);
         var fileEditorManager = FileEditorManager.getInstance(getProject());
         assertThat(fileEditorManager.isFileOpen(selectedFile)).isFalse();
 
-        var psiFile = myFixture.configureByText("hu.json", """
-            {
-                "setting": {
-                    "options": "Beállítások",
-                    "editor": {
-                        "name": "Sz<caret>erkesztő"
-                    }
-                }
-            }
-            """);
-        var parentProperty = PsiTreeUtil.getParentOfType(psiFile.findElementAt(myFixture.getCaretOffset()), JsonProperty.class);
+        var psiFile = myFixture.configureByFile("translations/ru.txt");
+        var parentSection = PsiTreeUtil.getParentOfType(psiFile.findElementAt(myFixture.getCaretOffset()), IniSection.class);
 
-        new ShowTranslationInOtherLanguageIntention()
-            .handleSelectedFile(parentProperty, selectedPsiFile, getProject(), myFixture.getEditor(), psiFile);
+        new ShowTranslationInOtherLanguageIntention().handleSelectedFile(parentSection, selectedPsiFile);
 
         assertThat(fileEditorManager.isFileOpen(selectedFile)).isTrue();
-        assertThat(fileEditorManager.getSelectedTextEditor().getCaretModel().getOffset()).isEqualTo(65);
+        assertThat(fileEditorManager.getSelectedTextEditor().getCaretModel().getOffset()).isEqualTo(49);
     }
 }

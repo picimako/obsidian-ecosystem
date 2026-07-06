@@ -10,6 +10,7 @@ import com.intellij.psi.PsiManager;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesListener;
 import com.picimako.obsidian.translation.TranslationReader;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
 import kotlin.Unit;
 import kotlin.coroutines.Continuation;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Executes stuff after a project is initialized.
  */
-@SuppressWarnings("UnstableApiUsage")
 final class ProjectStartupActivity implements ProjectActivity {
     private static final Key<Disposable> IS_ORIGINAL_VALUES_LISTENER_REGISTERED = Key.create("isOriginalValueListenerRegistered");
 
@@ -27,6 +27,7 @@ final class ProjectStartupActivity implements ProjectActivity {
             OriginalLocalizationValuesCache.getInstance(project).setProjectObsidianTranslations(true);
             TranslationReader.readOriginal(project);
             registerOriginalValuesListener(project);
+            IniLanguageSubstitutorKt.applyIniFileTypeOverride(project);
         }
 
         return Unit.INSTANCE;

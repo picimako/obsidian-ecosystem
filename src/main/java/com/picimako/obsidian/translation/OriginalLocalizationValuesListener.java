@@ -1,10 +1,10 @@
 package com.picimako.obsidian.translation;
 
-import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
+import static com.picimako.obsidian.translation.TranslationFilesCollector.isOriginalLocFile;
 
-import com.intellij.json.psi.JsonFile;
 import com.intellij.psi.PsiTreeChangeAdapter;
 import com.intellij.psi.PsiTreeChangeEvent;
+import ini4idea.lang.psi.IniFile;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -44,10 +44,10 @@ public class OriginalLocalizationValuesListener extends PsiTreeChangeAdapter {
 
     private void handleChange(@NotNull PsiTreeChangeEvent event) {
         var file = event.getFile();
-        if (file instanceof JsonFile jsonFile && ORIGINAL_LOCALIZATION_FILE.equals(file.getName())) {
+        if (file instanceof IniFile iniFile && isOriginalLocFile(file)) {
             //NOTE: In case this would cause performance issues, restrict the caching to a smaller chunk
             // of the file around the changes.
-            TranslationReader.readOriginal(jsonFile, file.getProject());
+            TranslationReader.readOriginal(iniFile, file.getProject());
         }
     }
 }

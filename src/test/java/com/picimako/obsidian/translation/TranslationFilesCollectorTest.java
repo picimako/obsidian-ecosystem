@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.psi.PsiFileSystemItem;
-import com.intellij.testFramework.StartupActivityTestUtil;
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
 
 /**
  * Integration test for {@link TranslationFilesCollector}.
@@ -17,36 +17,22 @@ public final class TranslationFilesCollectorTest extends BasePlatformTestCase {
         return "src/test/testData/collecttranslationfiles";
     }
 
-    public void testCollectsTranslationFilesIncludingTheFileAtInvocation() {
-        myFixture.copyFileToProject(".eslintrc.json");
-        myFixture.copyFileToProject("package.json");
-        myFixture.copyFileToProject("en.json");
-        myFixture.copyFileToProject("ja.json");
-        myFixture.copyFileToProject("pl.md");
-        myFixture.copyDirectoryToProject("somedirectory", "somedirectory");
-        var fileAtInvocation = myFixture.configureByFile("hu.json");
-
-        var translationFiles = TranslationFilesCollector.collectTranslationFiles(ProjectUtil.guessProjectDir(getProject()), getProject(), fileAtInvocation, true);
-
-        assertThat(translationFiles)
-            .extracting(PsiFileSystemItem::getName)
-            .containsExactlyInAnyOrder("en.json", "hu.json", "ja.json");
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
     }
 
-    public void testCollectsTranslationFilesExcludingTheFileAtInvocation() {
-        StartupActivityTestUtil.waitForProjectActivitiesToComplete(getProject());
-        myFixture.copyFileToProject(".eslintrc.json");
-        myFixture.copyFileToProject("package.json");
-        myFixture.copyFileToProject("en.json");
-        myFixture.copyFileToProject("ja.json");
-        myFixture.copyFileToProject("pl.md");
-        myFixture.copyDirectoryToProject("somedirectory", "somedirectory");
-        var fileAtInvocation = myFixture.configureByFile("hu.json");
+    public void testCollectsTranslationFilesIncludingTheFileAtInvocation() {
+        myFixture.copyFileToProject("translations/en.txt");
+        myFixture.copyFileToProject("translations/ja.txt");
+        myFixture.copyFileToProject("translations/pl.md");
+        myFixture.copyDirectoryToProject("translations/somedirectory", "translations/somedirectory");
 
-        var translationFiles = TranslationFilesCollector.collectTranslationFiles(ProjectUtil.guessProjectDir(getProject()), getProject(), fileAtInvocation);
+        var translationFiles = TranslationFilesCollector.collectAppTranslationFiles(ProjectUtil.guessProjectDir(getProject()), getProject());
 
         assertThat(translationFiles)
             .extracting(PsiFileSystemItem::getName)
-            .containsExactlyInAnyOrder("en.json", "ja.json");
+            .containsExactlyInAnyOrder("en.txt", "ja.txt");
     }
 }

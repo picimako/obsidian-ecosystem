@@ -17,14 +17,13 @@ import java.util.Map;
  * a value is needed from it.
  */
 @Service(Service.Level.PROJECT)
+@Getter
 public final class OriginalLocalizationValuesCache {
 
     /**
-     * JSON property path -> original English localization value.
+     * Ini section name -> original English localization value.
      */
-    @Getter
     private final Map<String, String> originalValues = new HashMap<>();
-    @Getter
     @Setter
     private boolean isProjectObsidianTranslations;
 
@@ -33,10 +32,10 @@ public final class OriginalLocalizationValuesCache {
     }
 
     /**
-     * Adds a localization value for the provided JSON property {@code path}.
+     * Adds a localization value for the provided Ini {@code sectionName}.
      */
-    public void addLocalizationValue(String path, String value) {
-        originalValues.put(path, value);
+    public void addLocalizationValue(String sectionName, String value) {
+        originalValues.put(sectionName, value);
     }
 
     public static OriginalLocalizationValuesCache getInstance(Project project) {
@@ -48,7 +47,7 @@ public final class OriginalLocalizationValuesCache {
     }
 
     @Nullable
-    public static String getOriginalValueAt(String propertyPath, Project project) {
-        return OriginalLocalizationValuesCache.getInstance(project).getOriginalValues().get(propertyPath);
+    public static String getOriginalValueAt(String sectionName, Project project) {
+        return OriginalLocalizationValuesCache.getInstance(project).getOriginalValues().get(sectionName);
     }
 }

@@ -19,25 +19,23 @@ abstract class IntentionTestBase extends BasePlatformTestCase {
     /**
      * Validates if the intention is available at the caret position in the provided file content.
      *
-     * @param fileName the file name to configure the test data in
-     * @param text     the file content to use as test data
+     * @param filePath the file name to configure the test data in
      */
-    protected void checkIntentionIsAvailable(String fileName, String text) {
-        checkIntentionAvailability(fileName, text, true);
+    protected void checkIntentionIsAvailable(String filePath) {
+        checkIntentionAvailability(filePath, true);
     }
 
     /**
      * Validates if the intention is not available at the caret position in the provided file content.
      *
-     * @param fileName the file name to configure the test data in
-     * @param text     the file content to use as test data
+     * @param filePath the file name to configure the test data in
      */
-    protected void checkIntentionIsNotAvailable(String fileName, String text) {
-        checkIntentionAvailability(fileName, text, false);
+    protected void checkIntentionIsNotAvailable(String filePath) {
+        checkIntentionAvailability(filePath, false);
     }
 
-    private void checkIntentionAvailability(String fileName, String text, boolean availability) {
-        var psiFile = myFixture.configureByText(fileName, text);
+    private void checkIntentionAvailability(String filePath, boolean availability) {
+        var psiFile = myFixture.configureByFile(filePath);
         assertThat(getIntention().isAvailable(getProject(), myFixture.getEditor(), psiFile)).isEqualTo(availability);
     }
 

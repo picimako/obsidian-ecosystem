@@ -16,11 +16,10 @@ public abstract class InspectionTestBase extends BasePlatformTestCase {
     /**
      * Tests highlighting for the pre-configured inspection against a file which is created on-the-fly with the provided name and text.
      *
-     * @param filename the filename to create for this test. Must include the file extension.
-     * @param text     the text to put into the test file
+     * @param filePath the filename to create for this test. Must include the file extension.
      */
-    protected void doTest(String filename, String text) {
-        myFixture.configureByText(filename, text);
+    protected void doTest(String filePath) {
+        myFixture.configureByFile(filePath);
         myFixture.enableInspections(getInspection());
         myFixture.testHighlighting(true, false, true);
     }

@@ -4,15 +4,14 @@ import static com.intellij.lang.annotation.HighlightSeverity.INFORMATION;
 import static com.intellij.openapi.editor.DefaultLanguageHighlighterColors.KEYWORD;
 import static com.picimako.obsidian.translation.OriginalLocalizationValuesCache.isProjectObsidianTranslations;
 
-import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
-import com.picimako.obsidian.translation.TranslationFileUtil;
 import com.picimako.obsidian.translation.inspection.VariablesCollector;
+import ini4idea.lang.psi.IniValue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.regex.Matcher;
@@ -29,16 +28,13 @@ final class VariableAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
         if (!isProjectObsidianTranslations(element.getProject())
-            || !(element instanceof JsonStringLiteral jsonLiteral)
-            || TranslationFileUtil.isPackageOrEslintrcJson(element.getContainingFile().getName())) return;
+            || !(element instanceof IniValue iniValue)) return;
 
-        //Using the literal value that include the leading and trailing " symbols, so that it is easier to
-        // calculate the adjusted ranges.
-        String literalTextWithQuotes = jsonLiteral.getText();
+        String iniValueText = iniValue.getText();
 
-        if (literalTextWithQuotes.length() < STRING_WITH_VARIABLE_MINIMUM_LENGTH) return;
+        if (iniValueText.length() < STRING_WITH_VARIABLE_MINIMUM_LENGTH) return;
 
-        annotate(element, VariablesCollector.VARIABLE_PATTERN.matcher(literalTextWithQuotes), holder);
+        annotate(element, VariablesCollector.VARIABLE_PATTERN.matcher(iniValueText), holder);
     }
 
     private static void annotate(@NotNull PsiElement element, Matcher matcher, @NotNull AnnotationHolder holder) {

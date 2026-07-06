@@ -2,60 +2,33 @@ package com.picimako.obsidian.translation.annotator;
 
 import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
 
 /**
  * Integration test for {@link VariableAnnotator}.
  */
 public final class VariableAnnotatorTest extends BasePlatformTestCase {
 
+    @Override
+    protected String getTestDataPath() {
+        return "src/test/testData/variableannotator";
+    }
+
     public void testNoAnnotationInNonObsidianTranslationsProject() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(false);
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
 
-        myFixture.configureByText("en.json", """
-            {
-              <info descr="Property key">"pdf"</info>: {
-                <info descr="Property key">"action-copy-page-link"</info>: "Copy link to page {{page}}",
-                <info descr="Property key">"msg-max-search-results"</info>: "{{current}} of over {{limit}} matches",
-              }
-            }
-            """);
-        myFixture.testHighlighting(false, true, false);
-    }
-
-    public void testNoAnnotationInPackageJson() {
-        OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
-
-        myFixture.configureByText("package.json", """
-            {
-              <info descr="Property key">"name"</info>: "obsidian-{{community}}-releases"
-            }
-            """);
-        myFixture.testHighlighting(false, true, false);
-    }
-
-    public void testNoAnnotationInEslintrcJson() {
-        OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
-
-        myFixture.configureByText(".eslintrc.json", """
-            {
-              <info descr="Property key">"extends"</info>: ["plugin:json/recommended"],
-              <info descr="Property key">"other-config"</info>: "{{variable}}"
-            }
-            """);
+        myFixture.copyFileToProject("translations/en.txt");
+        myFixture.configureByFile("translations/en.txt");
         myFixture.testHighlighting(false, true, false);
     }
 
     public void testVariableAnnotations() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
 
-        myFixture.configureByText("en.json", """
-            {
-              <info descr="Property key">"pdf"</info>: {
-                <info descr="Property key">"action-copy-page-link"</info>: "Copy link to page <info descr="null">{{</info><info descr="null">page</info><info descr="null">}}</info>",
-                <info descr="Property key">"msg-max-search-results"</info>: "<info descr="null">{{</info><info descr="null">current</info><info descr="null">}}</info> of over <info descr="null">{{</info><info descr="null">limit</info><info descr="null">}}</info> matches",
-              }
-            }
-            """);
+        myFixture.copyFileToProject("translations/hu.txt");
+        myFixture.configureByFile("translations/hu.txt");
         myFixture.testHighlighting(false, true, false);
     }
 }

@@ -4,6 +4,7 @@ import com.intellij.codeInspection.InspectionProfileEntry;
 import com.picimako.obsidian.InspectionTestBase;
 import com.picimako.obsidian.translation.OriginalLocalizationValuesCache;
 import com.picimako.obsidian.translation.TranslationReader;
+import com.picimako.obsidian.translation.lang.IniLanguageSubstitutorKt;
 
 /**
  * Integration test for {@link VariableUsageInspection}.
@@ -20,46 +21,31 @@ public final class VariableUsageInspectionTest extends InspectionTestBase {
         return new VariableUsageInspection();
     }
 
-    public void testNoHighlightingInEnJson() {
-        OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
-
-        doTest("en.json", """
-            {
-              "nouns": {
-                "character-with-count": "{{cou}} character",
-                "word-with-count": "1 word"
-              }
-            }
-            """);
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        IniLanguageSubstitutorKt.applyIniFileTypeOverride(getProject());
     }
 
-    public void testHighlightingInNonObsidianTranslationsProject() {
+    public void testNoHighlightingInEnTxt() {
+        OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
+
+        doTest("translations/en-no-highlight.txt");
+    }
+
+    public void testNoHighlightingInNonObsidianTranslationsProject() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(false);
-        myFixture.copyFileToProject("en.json");
+        myFixture.copyFileToProject("translations/en.txt");
         TranslationReader.readOriginal(getProject());
 
-        doTest("hu.json", """
-            {
-              "nouns": {
-                "character-with-count": "{{cou}} karakter",
-                "word-with-count": "1 szo"
-              }
-            }
-            """);
+        doTest("translations/hu-no-highlight.txt");
     }
 
     public void testHighlighting() {
         OriginalLocalizationValuesCache.getInstance(getProject()).setProjectObsidianTranslations(true);
-        myFixture.copyFileToProject("en.json");
+        myFixture.copyFileToProject("translations/en.txt");
         TranslationReader.readOriginal(getProject());
 
-        doTest("hu.json", """
-            {
-              "nouns": {
-                "character-with-count": <error descr="The following variables are invalid: cou. Valid ones are: count"><error descr="The following variables are not used from the English value: count">"{{cou}} karakter"</error></error>,
-                "word-with-count": <error descr="The following variables are not used from the English value: size">"1 szo"</error>
-              }
-            }
-            """);
+        doTest("translations/hu.txt");
     }
 }

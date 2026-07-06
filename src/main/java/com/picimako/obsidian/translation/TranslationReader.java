@@ -1,65 +1,64 @@
 package com.picimako.obsidian.translation;
 
 import static com.intellij.openapi.application.ReadAction.computeBlocking;
-import static com.picimako.obsidian.translation.TranslationFileUtil.getPropertyPath;
 import static com.picimako.obsidian.translation.TranslationFilesCollector.ORIGINAL_LOCALIZATION_FILE;
 
-import com.intellij.json.psi.JsonFile;
-import com.intellij.json.psi.JsonObject;
-import com.intellij.json.psi.JsonProperty;
-import com.intellij.json.psi.JsonStringLiteral;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectUtil;
 import com.intellij.psi.PsiManager;
-
-import java.util.List;
+import ini4idea.lang.psi.IniFile;
+import ini4idea.lang.psi.IniSection;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Reads and caches the original, English translation values in {@code en.json}.
+ * Reads and caches the original, English translation values in {@code en.txt}.
  */
 public final class TranslationReader {
-    private static final Logger LOG = Logger.getInstance(TranslationReader.class);
-
     /**
      * The reading logic presumes, and thus doesn't perform validation against the following:
      * <ul>
-     *     <li>{@code en.json} is present,</li>
-     *     <li>the top level value in {@code en.json} is an object</li>
+     *     <li>{@code en.txt} is present,</li>
      * </ul>
      */
     public static void readOriginal(Project project) {
         var projectRootDir = ProjectUtil.guessProjectDir(project);
         if (projectRootDir == null) {
-            LOG.warn("Could not read translation values from 'en.json' because the project root directory was not found.");
+            Logger.getInstance(TranslationReader.class).warn("Could not read translation values from 'en.txt' because the project root directory was not found.");
             return;
         }
 
         var originalLocFile = computeBlocking(() -> {
-            var enJson = projectRootDir.findFileByRelativePath(ORIGINAL_LOCALIZATION_FILE);
-            return (JsonFile) PsiManager.getInstance(project).findFile(enJson);
+            var translationsDir = projectRootDir.findFileByRelativePath("translations");
+            if (translationsDir == null) return null;
+
+            var enTxt = translationsDir.findFileByRelativePath(ORIGINAL_LOCALIZATION_FILE);
+            if (enTxt == null) return null;
+
+
+            var enTxtFile = PsiManager.getInstance(project).findFile(enTxt);
+            return enTxtFile instanceof IniFile iniFile ? iniFile : enTxtFile;
         });
 
-        readOriginal(originalLocFile, project);
+        if (!(originalLocFile instanceof IniFile originalLocIniFile)) return;
+
+        readOriginal(originalLocIniFile, project);
     }
 
     /**
      * In essence, this is the same as {@link #readOriginal(Project)}, but for cases when the file is already available.
      */
-    public static void readOriginal(JsonFile translationFile, Project project) {
-        var topLevelObject = (JsonObject) computeBlocking(translationFile::getTopLevelValue);
-        handlePropertyListCaching(topLevelObject.getPropertyList(), topLevelObject, project);
-    }
+    public static void readOriginal(@NotNull IniFile translationFile, Project project) {
+        for (var e : computeBlocking(translationFile::getChildren)) {
+            if (e instanceof IniSection section) {
+                var sectionName = computeBlocking(section::getNameText);
+                var originalValue = computeBlocking(() -> section.getIniPropertyList().getFirst().getIniValue());
+                if (originalValue == null) continue;
 
-    private static void handlePropertyListCaching(List<JsonProperty> properties, JsonObject topLevelObject, Project project) {
-        for (var property : properties) {
-            if (property.getValue() instanceof JsonStringLiteral literal) {
-                var propertyPath = getPropertyPath(literal, topLevelObject);
+                var original = computeBlocking(originalValue::getText);
 
-                //Save the property literal value mapped to its path
-                OriginalLocalizationValuesCache.getInstance(project).addLocalizationValue(propertyPath, literal.getValue());
-            } else if (property.getValue() instanceof JsonObject object) {
-                handlePropertyListCaching(object.getPropertyList(), topLevelObject, project);
+                //Save the original value mapped to its section name
+                OriginalLocalizationValuesCache.getInstance(project).addLocalizationValue(sectionName, original);
             }
         }
     }
