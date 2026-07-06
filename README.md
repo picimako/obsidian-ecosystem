@@ -13,14 +13,11 @@ activities. You can download the plugin archive from the [download](download/obs
 ----
 
 <!-- TOC -->
-* [Translations](#translations)
-  * [Show translation of property in another language](#show-translation-of-property-in-another-language)
-  * [Variable annotations](#variable-annotations)
-  * [Variable usage inspections](#variable-usage-inspections)
-  * [Untranslated entries](#untranslated-entries)
+* [Show translation of property in another language](#show-translation-of-property-in-another-language)
+* [Variable annotations](#variable-annotations)
+* [Variable usage inspections](#variable-usage-inspections)
+* [Untranslated entries](#untranslated-entries)
 <!-- TOC -->
-
-## Translations
 
 The features described in this document are all created for the [obsidian-translations](https://github.com/obsidianmd/obsidian-translations/) project.
 
