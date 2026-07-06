@@ -1,8 +1,0 @@
-{
-  "setting": {
-    "file": {
-      "name": "Files & Links",
-      <selection>"option-confirm-file-deletion": "Confirm file deletion"</selection>
-    }
-  }
-}
